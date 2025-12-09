@@ -91,9 +91,8 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
   if (!books[isbn]) {
     return res.status(404).json({ message: `Book with ISBN=${isbn} not found!!` })
   }
-
   if (!books[isbn].reviews) {
-    return res.status.(404).json({ message: `No reviews for book with ISBN=${isbn}` })
+    return res.status(404).json({ message: "No reviews..." });
   }
 
   if (!books[isbn].reviews[username]) {
