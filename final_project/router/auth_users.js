@@ -41,9 +41,8 @@ regd_users.post("/login", (req, res) => {
   // Authenticate user
   if (authenticatedUser(username, password)) {
     // Generate JWT access token
-    let accessToken = jwt.sign({
-      data: password
-    }, 'access', { expiresIn: 60 * 60 });
+    let accessToken = jwt.sign(
+      { username }, 'access', { expiresIn: '1h' });
 
     // Store access token and username in session
     req.session.authorization = {
@@ -59,7 +58,7 @@ regd_users.post("/login", (req, res) => {
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
   const isbn = req.params.isbn;
-  const review = req.query.reviews;
+  const review = req.query.review;
   const username = req.session.authorization.username;
 
   if (!books[isbn]) {
@@ -67,7 +66,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
   }
 
   if (!review) {
-    res.status(400).json({ message: "Review query parameter is required" });
+    return res.status(400).json({ message: "Review query parameter is required" });
   }
 
   if (!books[isbn].reviews) {
@@ -94,7 +93,7 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
   }
 
   if (!books[isbn].reviews) {
-    return res.status.apply(404).json({ message: `No reviews for book with ISBN=${isbn}` })
+    return res.status.(404).json({ message: `No reviews for book with ISBN=${isbn}` })
   }
 
   if (!books[isbn].reviews[username]) {
